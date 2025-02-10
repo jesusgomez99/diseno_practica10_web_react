@@ -1,7 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import ListaJuegos from './pages/ListaJuegos.jsx'
 import { Nav } from './components/Nav.jsx'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Home } from './pages/Home.jsx'
@@ -18,7 +17,7 @@ createRoot(document.getElementById('root')).render(
             {/* Configuración de rutas */}
             <Routes>
               <Route path="/" element={<Home/>} />
-              <Route path="/listajuegos" element={<Prueba/>} />
+              <Route path="/juegos" element={<Prueba/>} />
               <Route path="/juego/:id" element={<JuegoDetalles/>} />
             </Routes>
           </div>

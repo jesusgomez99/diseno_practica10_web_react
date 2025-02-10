@@ -28,6 +28,7 @@ export function Carrusel (){
                 .filter((game) => game.rating>=4.5)
                 .map((game) => (
                     <img 
+                        key={game.id}
                         className="w-full h-full object-cover object-top"
                         src={game.background_image} 
                         alt={game.name}

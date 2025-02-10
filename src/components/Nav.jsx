@@ -16,7 +16,7 @@ export function Nav() {
           Home
         </Navbar.Link>
         
-        <Navbar.Link as={Link} to="/listajuegos" active={location.pathname === "/listajuegos"}>
+        <Navbar.Link as={Link} to="/juegos" active={location.pathname === "/listajuegos"}>
           Lista de Juegos
         </Navbar.Link>
       

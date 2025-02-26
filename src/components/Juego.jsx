@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 
-export function Juego({name,url,rating,platforms,id}){
+export function Juego({name,url,rating,platforms,genres,id}){
 
   const navigate = useNavigate()
 
@@ -38,6 +38,7 @@ export function Juego({name,url,rating,platforms,id}){
                 </div>
               ))}
             </div>
+
           </div>
         </div>
       )

@@ -5,21 +5,43 @@ export function Nav() {
   const location = useLocation(); // Obtiene la ruta actual
 
   return (
-    <Navbar fluid className="bg-slate-200">
+    <Navbar
+      fluid
+      className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white shadow-lg"
+    >
+      {/* Nombre de la web siempre visible */}
+      <Navbar.Brand>
+        <span className="text-xl font-bold text-yellow-300">GameAme</span>
+      </Navbar.Brand>
+
       {/* Botón de Toggle para dispositivos móviles */}
       <Navbar.Toggle />
 
       {/* Contenido del Navbar */}
       <Navbar.Collapse>
-
-        <Navbar.Link as={Link} to="/" active={location.pathname === "/"}>
+        {/* Enlace Home */}
+        <Link
+          to="/"
+          className={`${
+            location.pathname === "/"
+              ? "text-yellow-300 font-bold"
+              : "hover:text-yellow-200"
+          } transition duration-300`}
+        >
           Home
-        </Navbar.Link>
-        
-        <Navbar.Link as={Link} to="/juegos" active={location.pathname === "/listajuegos"}>
+        </Link>
+
+        {/* Enlace Lista de Juegos */}
+        <Link
+          to="/juegos"
+          className={`${
+            location.pathname === "/juegos"
+              ? "text-yellow-300 font-bold"
+              : "hover:text-yellow-200"
+          } transition duration-300`}
+        >
           Lista de Juegos
-        </Navbar.Link>
-      
+        </Link>
       </Navbar.Collapse>
     </Navbar>
   );

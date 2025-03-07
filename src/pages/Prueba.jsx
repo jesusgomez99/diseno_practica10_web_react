@@ -1,23 +1,57 @@
-import { Juego } from "../components/Juego";
-import { RawApi } from "../services/RawApi";
+import { fetchAllGames } from "../services/rawApi"; // Asegúrate de que esta función esté correctamente implementada
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Paginacion } from "../components/Paginacion";
 
 export function Prueba() {
     const [games, setGames] = useState([]);
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
+    const [pagina, setPagina] = useState(1); // Cambiado a 1 para empezar desde la primera página
+    const [favorites, setFavorites] = useState([]); // Estado para los juegos favoritos
 
+    const atrasarPag = () => {
+        if (pagina > 1) {
+            setPagina(pagina - 1);
+        }
+    };
+
+    // Cargar juegos desde el API
     useEffect(() => {
-        // Llama a la función RawApi para obtener los datos
-        RawApi()
-            .then((data) => {
-                setGames(data.results); // Almacena los datos en el estado
-            })
-            .catch((error) => {
+        const obtenerJuegos = async () => {
+            try {
+                const data = await fetchAllGames(pagina); // Asegúrate de que esta función devuelva los datos correctamente
+                setGames(data); // Almacena los datos en el estado
+            } catch (error) {
                 setError(error.message); // Maneja errores
-            });
-    }, []); // Ejecuta solo una vez al montar el componente
+            }
+        };
+
+        obtenerJuegos(); // Llama a la función para obtener los juegos
+        window.scrollTo(0, 0); // Desplaza la ventana hacia arriba
+    }, [pagina]); // Ejecuta cada vez que cambia la página
+
+    // Cargar juegos favoritos desde el localStorage al inicio
+    useEffect(() => {
+        const savedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        setFavorites(savedFavorites);
+    }, []);
+
+    // Función para agregar o quitar juegos de favoritos
+    const toggleFavorite = (gameId) => {
+        let updatedFavorites = [...favorites];
+
+        if (updatedFavorites.includes(gameId)) {
+            // Si ya está en favoritos, lo eliminamos
+            updatedFavorites = updatedFavorites.filter((id) => id !== gameId);
+        } else {
+            // Si no está, lo agregamos
+            updatedFavorites.push(gameId);
+        }
+
+        setFavorites(updatedFavorites);
+        localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    };
 
     if (error) return <p className="text-red-500 text-center mt-10">Error: {error}</p>;
 
@@ -64,14 +98,12 @@ export function Prueba() {
 
             {/* Lista de juegos */}
             <div className="flex flex-wrap gap-8 justify-center">
-                {
-                    filteredGames.map((game) => (
-                        <Link
-                        to={`/juego/${game.id}`} // Redirige a la ruta con el ID del juego
+                {filteredGames.map((game) => (
+                    <div
                         key={game.id}
                         className="bg-white rounded-lg shadow-lg overflow-hidden w-80 transform hover:scale-105 transition duration-300"
                     >
-                        <div>
+                        <Link to={`/juego/${game.id}`} className="block">
                             <img
                                 src={game.background_image}
                                 alt={game.name}
@@ -84,11 +116,30 @@ export function Prueba() {
                                     Platforms: {game.platforms.map(p => p.platform.name).join(", ")}
                                 </p>
                             </div>
+                        </Link>
+
+                        {/* Botón de favorito */}
+                        <div className="p-4 flex">
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation(); // Evita que se redirija al hacer clic en el botón
+                                    toggleFavorite(game.id);
+                                }}
+                                className={`px-4 py-2 rounded-full font-semibold ${
+                                    favorites.includes(game.id)
+                                        ? "bg-red-500 text-white"
+                                        : "bg-gray-300 text-gray-700"
+                                }`}
+                            >
+                                {favorites.includes(game.id) ? "Favorito" : "Agregar a Favoritos"}
+                            </button>
                         </div>
-                    </Link>
-                    ))
-                }
+                    </div>
+                ))}
             </div>
+
+            {/* Paginación */}
+            <Paginacion page={pagina} adelantar={() => setPagina(pagina + 1)} atrasar={atrasarPag} />
         </>
     );
 }

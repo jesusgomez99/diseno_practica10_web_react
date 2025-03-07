@@ -1,15 +1,13 @@
-import { Carousel } from "flowbite-react";
-import React, { useState, useEffect } from "react";
-import { fetchBetterGames } from "../services/rawApi";
+import { Carousel } from "flowbite-react"; // Importa el componente Carousel
+import React from "react";
 
-export function Carrusel({juegos, error}) {
-
+export function CarruselEvent({ eventos, error }) {
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
     <div className="relative max-w-5xl mx-auto mt-10">
-      <h2 className="text-center text-4xl font-bold text-yellow-100 mb-6">
-        Juegos Destacados
+      <h2 className="text-center text-4xl font-bold text-purple-400 mb-6">
+        Eventos Destacados
       </h2>
       <div className="h-64 sm:h-80 xl:h-96 2xl:h-[500px] rounded-lg overflow-hidden shadow-lg">
         <Carousel
@@ -17,7 +15,7 @@ export function Carrusel({juegos, error}) {
           indicators={true} // Muestra indicadores
           leftControl={
             <div
-              className="absolute top-1/2 left-4 transform -translate-y-1/2  text-white p-3 rounded-full  focus:outline-none "
+              className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white p-3 rounded-full focus:outline-none"
               style={{ fontSize: "2rem" }} // Tamaño de la flecha
             >
               ◀
@@ -25,20 +23,20 @@ export function Carrusel({juegos, error}) {
           }
           rightControl={
             <div
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white p-3 rounded-full focus:outline-none  "
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white p-3 rounded-full focus:outline-none"
               style={{ fontSize: "2rem" }} // Tamaño de la flecha
             >
               ▶
             </div>
           }
         >
-          {juegos.map((game) => (
-            <div key={game.id} className="relative w-full h-full bg-black">
-              {game.background_image ? (
+          {eventos.map((evento) => (
+            <div key={evento.id} className="relative w-full h-full bg-black">
+              {evento.image ? (
                 <img
                   className="w-full h-full object-cover opacity-80"
-                  src={game.background_image}
-                  alt={game.name}
+                  src={evento.image}
+                  alt={evento.title}
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gray-800">
@@ -46,12 +44,7 @@ export function Carrusel({juegos, error}) {
                 </div>
               )}
               <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-transparent to-transparent p-4">
-                <h3 className="text-white text-xl font-bold">{game.name}</h3>
-                {game.rating && (
-                  <p className="text-gray-300 text-sm">
-                    Rating: {game.rating} ⭐
-                  </p>
-                )}
+                <h3 className="text-white text-xl font-bold">{evento.title}</h3>
               </div>
             </div>
           ))}

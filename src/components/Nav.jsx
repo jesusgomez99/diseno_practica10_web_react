@@ -7,7 +7,7 @@ export function Nav() {
   return (
     <Navbar
       fluid
-      className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white shadow-lg"
+      className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white shadow-lg lg:px-20 xl:px-32 2xl:px-44"
     >
       {/* Nombre de la web siempre visible */}
       <Navbar.Brand>
@@ -42,6 +42,31 @@ export function Nav() {
         >
           Lista de Juegos
         </Link>
+
+        {/* Enlace Lista de Favoritos */}
+        <Link
+          to="/favoritos"
+          className={`${
+            location.pathname === "/favoritos"
+              ? "text-yellow-300 font-bold"
+              : "hover:text-yellow-200"
+          } transition duration-300`}
+        >
+          Favoritos
+        </Link>
+
+                {/* Enlace Lista de Eventos */}
+                <Link
+          to="/eventos"
+          className={`${
+            location.pathname === "/eventos"
+              ? "text-yellow-300 font-bold"
+              : "hover:text-yellow-200"
+          } transition duration-300`}
+        >
+          Eventos
+        </Link>
+
       </Navbar.Collapse>
     </Navbar>
   );

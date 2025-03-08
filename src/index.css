@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+h3{
+    font-weight:bold ;
+    color: rgb(79, 107, 216);
+    margin-top: 15px;
+    font-size: larger;
+}

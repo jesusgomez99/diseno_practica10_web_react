@@ -45,24 +45,27 @@ export function PublisherDetalles() {
       {/* Información del publisher */}
       <div className="flex flex-col items-center text-center">
         {publisher.image_background && (
-          <img
-            src={publisher.image_background}
-            alt={publisher.name}
-            className="w-full max-w-2xl h-64 object-cover rounded-lg shadow-lg"
-          />
+          <div className="w-full max-w-2xl h-64 overflow-hidden rounded-lg">
+            <img
+              src={publisher.image_background}
+              alt={publisher.name}
+              className="w-full h-full object-cover object-top"
+            />
+          </div>
         )}
         <h1 className="text-3xl font-bold mt-4 text-slate-700">{publisher.name}</h1>
         <p className="text-blue-700 mt-2">Juegos publicados: {publisher.games_count}</p>
       </div>
 
+
       <div
-        className="mt-4 text-gray-700"
+        className="mt-6 text-gray-700"
         dangerouslySetInnerHTML={{ __html: publisher.description }}
         />
 
       {/* Lista de juegos del publisher */}
-      <div className="mt-6">
-        <h2 className="text-xl font-bold mb-3 text-slate-700">Top 20 juegos:</h2>
+      <div className="mt-6 ">
+        <h2 className="text-3xl font-bold mb-5 text-slate-700 text-center">Sus Mejores Juegos</h2>
         {juegos.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {juegos.map((juego) => (

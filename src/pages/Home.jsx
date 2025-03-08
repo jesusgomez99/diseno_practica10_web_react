@@ -15,7 +15,9 @@ export function Home() {
       .then((data) => {
         console.log(data); // Verifica la respuesta de la API
         if (Array.isArray(data) && data.length > 0) {
-          setJuegos(data); // Asegúrate de que estás configurando el estado correctamente
+          // Filtrar juegos con rating mayor a 4.5
+          const juegosFiltrados = data.filter((game) => game.rating > 4.4);
+          setJuegos(juegosFiltrados); // Configuramos el estado con los juegos filtrados
         } else {
           setError("Invalid API response structure");
         }
@@ -49,7 +51,6 @@ export function Home() {
       </p>
 
       {/* Separador decorativo */}
-      
       <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-10"></div>
 
       {/* Carrusel de eventos */}
@@ -58,7 +59,7 @@ export function Home() {
       </div>
 
       <p className="mt-7 mb-10 text-center px-5 text-lg text-purple-300 max-w-3xl mx-auto leading-relaxed">
-          Nos enorgullece informaros sobre una emocionante actualización en nuestra página: hemos lanzado un nuevo apartado dedicado exclusivamente a los eventos del mundo de los videojuegos. Este nuevo espacio está diseñado para que puedas descubrir y seguir los mejores eventos, desde torneos hasta convenciones y lanzamientos.
+        Nos enorgullece informaros sobre una emocionante actualización en nuestra página: hemos lanzado un nuevo apartado dedicado exclusivamente a los eventos del mundo de los videojuegos. Este nuevo espacio está diseñado para que puedas descubrir y seguir los mejores eventos, desde torneos hasta convenciones y lanzamientos.
       </p>
 
       {/* Separador decorativo */}
@@ -68,8 +69,6 @@ export function Home() {
       <div className="max-w-5xl mx-auto px-5">
         <Carrusel juegos={juegos} error={error} />
       </div>
-
-
     </div>
   );
 }
